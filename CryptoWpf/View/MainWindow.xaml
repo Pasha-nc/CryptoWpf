@@ -1,0 +1,197 @@
+﻿<Window x:Class="CryptoWpf.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CryptoWpf.View"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1500"
+        WindowStartupLocation="Manual" 
+        Left="5" Top="5">
+
+    <Window.Resources>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Width" Value="auto" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+
+        <TabControl SelectedItem="{Binding SelectedTabItem}" Loaded="CoinsTab_Loaded">
+            <TabItem Name="CoinsTab" IsSelected="True">
+                <TabItem.Header>
+                    <TextBlock Text="CoinsList"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <ListView Margin="5" Grid.Column="0" Name="CoinList" ItemsSource="{Binding Coins}" SelectedItem="{Binding SelectedCoin}">
+                        <ListView.View>
+                            <GridView>
+                                <!--<GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"></GridViewColumn>
+                                <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Path=Rank}"></GridViewColumn>
+                                <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Path=Symbol}"></GridViewColumn>-->
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                                <!--<GridViewColumn Header="Supply" DisplayMemberBinding="{Binding Path=Supply}"></GridViewColumn>
+                                <GridViewColumn Header="MaxSupply" DisplayMemberBinding="{Binding Path=MaxSupply}"></GridViewColumn>
+                                <GridViewColumn Header="MarketCapUsd" DisplayMemberBinding="{Binding Path=MarketCapUsd}"></GridViewColumn>
+                                <GridViewColumn Header="VolumeUsd24Hr" DisplayMemberBinding="{Binding Path=VolumeUsd24Hr}"></GridViewColumn>
+                                <GridViewColumn Header="PriceUsd" DisplayMemberBinding="{Binding Path=PriceUsd}"></GridViewColumn>
+                                <GridViewColumn Header="ChangePercent24Hr" DisplayMemberBinding="{Binding Path=ChangePercent24Hr}"></GridViewColumn>
+                                <GridViewColumn Header="Vwap24Hr" DisplayMemberBinding="{Binding Path=Vwap24Hr}"></GridViewColumn>-->
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Grid  Grid.Column="1" >
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+                            <StackPanel Margin="5" DataContext="{Binding SelectedCoin}">
+                                <TextBlock Text="Selected coin"  />
+
+                                <!--<TextBlock Text="Id" />
+                                <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Rank" />
+                                <TextBox Text="{Binding Rank, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Symbol" />
+                                <TextBox Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged}" />-->
+                                <TextBlock Text="Name" />
+                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                <!--<TextBlock Text="Supply" />
+                                <TextBox Text="{Binding Supply, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="MaxSupply" />
+                                <TextBox Text="{Binding MaxSupply, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="MarketCapUsd" />
+                                <TextBox Text="{Binding MarketCapUsd, UpdateSourceTrigger=PropertyChanged}" />-->
+                                <TextBlock Text="VolumeUsd24Hr" />
+                                <TextBox Text="{Binding VolumeUsd24Hr, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="PriceUsd" />
+                                <TextBox Text="{Binding PriceUsd, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="ChangePercent24Hr" />
+                                <TextBox Text="{Binding ChangePercent24Hr, UpdateSourceTrigger=PropertyChanged}" />
+                                <!--<TextBlock Text="Vwap24Hr" />
+                                <TextBox Text="{Binding Vwap24Hr, UpdateSourceTrigger=PropertyChanged}" />-->
+                            </StackPanel>
+
+                        </ScrollViewer>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="SearchCoinTab">
+                <TabItem.Header>
+                    <TextBlock Text="CoinSearch"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35">
+                        </RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox Width="100" TextAlignment="Center" FontSize="18" Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Content="Search Coin" Padding="5,0,5,0" Command="{Binding SearchCoinCmd}" ></Button>
+                        <Button Content="Open BTC Chart" Padding="5,0,5,0" Command="{Binding OpenChartCmd}" ></Button>
+                    </StackPanel>
+
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <ListView Margin="5" Grid.Column="0" Name="SearchCoinList" ItemsSource="{Binding SearchCoins}" SelectedItem="{Binding SearchSelectedCoin}">
+                            <ListView.View>
+                                <GridView>
+                                    <!--<GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"></GridViewColumn>
+                                    <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Path=Rank}"></GridViewColumn>
+                                    <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Path=Symbol}"></GridViewColumn>-->
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                                    <!--<GridViewColumn Header="Supply" DisplayMemberBinding="{Binding Path=Supply}"></GridViewColumn>
+                                    <GridViewColumn Header="MaxSupply" DisplayMemberBinding="{Binding Path=MaxSupply}"></GridViewColumn>
+                                    <GridViewColumn Header="MarketCapUsd" DisplayMemberBinding="{Binding Path=MarketCapUsd}"></GridViewColumn>
+                                    <GridViewColumn Header="VolumeUsd24Hr" DisplayMemberBinding="{Binding Path=VolumeUsd24Hr}"></GridViewColumn>
+                                    <GridViewColumn Header="PriceUsd" DisplayMemberBinding="{Binding Path=PriceUsd}"></GridViewColumn>
+                                    <GridViewColumn Header="ChangePercent24Hr" DisplayMemberBinding="{Binding Path=ChangePercent24Hr}"></GridViewColumn>
+                                    <GridViewColumn Header="Vwap24Hr" DisplayMemberBinding="{Binding Path=Vwap24Hr}"></GridViewColumn>-->
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <Grid Grid.Column="1">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Margin="5" DataContext="{Binding SearchSelectedCoin}">
+                                        <TextBlock Text="Selected coin"  />
+
+                                        <!--<TextBlock Text="Id" />
+                                        <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="Rank" />
+                                        <TextBox Text="{Binding Rank, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="Symbol" />
+                                        <TextBox Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        <TextBlock Text="Name" />
+                                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                        <!--<TextBlock Text="Supply" />
+                                        <TextBox Text="{Binding Supply, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="MaxSupply" />
+                                        <TextBox Text="{Binding MaxSupply, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="MarketCapUsd" />
+                                        <TextBox Text="{Binding MarketCapUsd, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        <TextBlock Text="VolumeUsd24Hr" />
+                                        <TextBox Text="{Binding VolumeUsd24Hr, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="PriceUsd" />
+                                        <TextBox Text="{Binding PriceUsd, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text="ChangePercent24Hr" />
+                                        <TextBox Text="{Binding ChangePercent24Hr, UpdateSourceTrigger=PropertyChanged}" />
+                                        <!--<TextBlock Text="Vwap24Hr" />
+                                        <TextBox Text="{Binding Vwap24Hr, UpdateSourceTrigger=PropertyChanged}" />-->
+                                    </StackPanel>
+
+                                    <ListView Grid.Row="1" Margin="5" Width="Auto" Height="Auto" Name="CoinMarkets" ItemsSource="{Binding CoinMarketsData}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="ExchangeId" DisplayMemberBinding="{Binding Path=ExchangeId}"></GridViewColumn>
+                                                <!--<GridViewColumn Header="BaseId" DisplayMemberBinding="{Binding Path=BaseId}"></GridViewColumn>
+                                                <GridViewColumn Header="QuoteId" DisplayMemberBinding="{Binding Path=QuoteId}"></GridViewColumn>
+                                                <GridViewColumn Header="BaseSymbol" DisplayMemberBinding="{Binding Path=BaseSymbol}"></GridViewColumn>
+                                                <GridViewColumn Header="QuoteSymbol" DisplayMemberBinding="{Binding Path=QuoteSymbol}"></GridViewColumn>
+                                                <GridViewColumn Header="VolumeUsd24Hr" DisplayMemberBinding="{Binding Path=VolumeUsd24Hr}"></GridViewColumn>-->
+                                                <GridViewColumn Header="PriceUsd" DisplayMemberBinding="{Binding Path=PriceUsd}"></GridViewColumn>
+                                                <!--<GridViewColumn Header="VolumePercent" DisplayMemberBinding="{Binding Path=VolumePercent}"></GridViewColumn>-->
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                        
+                    </Grid>
+                </Grid>
+            </TabItem>
+            
+        </TabControl>
+
+    </Grid>
+</Window>
